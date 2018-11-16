@@ -1,5 +1,5 @@
-var myApp = angular.module("myApp", ['ui.bootstrap', 'leaflet-directive', 'bsLoadingOverlay']);
-myApp.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsLoadingOverlayService',
+var bkSearch = angular.module("bksearch", ['ui.bootstrap', 'leaflet-directive', 'bsLoadingOverlay']);
+bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsLoadingOverlayService',
   function($scope, $timeout, HttpService, bsLoadingOverlayService) {
     var minLength = 0;
 
