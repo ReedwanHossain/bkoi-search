@@ -1,0 +1,36 @@
+/* Styles go here */
+
+.input-field > ul{
+  width: -webkit-fill-available;
+  display: block;
+    background: white;
+    z-index: 1001;
+    position: absolute;
+    padding: inherit;
+
+}
+.searchfield > input{
+  border-bottom-right-radius: 3px !important;
+  border-top-right-radius: 3px !important;
+}
+
+.input-field > ul >li{
+    margin: inherit;
+        padding: inherit;
+    background: url('../img/markersize_69.png') no-repeat;
+    background-position: right top;
+    background-clip: padding-box;
+    background-size: contain;
+
+}
+
+.input-field > ul >li >a:focus{
+    color: #000;
+    margin: inherit;
+        padding: inherit;
+    background: url('../img/markersize_69.png') no-repeat;
+    background-position: right top;
+    background-clip: padding-box;
+    background-size: contain;
+
+}

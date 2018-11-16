@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="myApp" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Barikoi Search Demo</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+   <link rel="stylesheet" href="./assets/css/leaflet.css"/> 
+   <link rel="stylesheet" href="./assets/css/style.css"/>
+<link rel="stylesheet" href="/assets/css/ngProgress.css">
+   <script src="./assets/js/leaflet.js"></script>
+   <script src="//code.angularjs.org/1.3.1/angular.js" data-semver="1.3.1" data-require="angular.js@*"></script>
+
+   <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.min.js" data-semver="0.10.0" data-require="angular-ui-bootstrap@0.10.0"></script>
+   <script data-require="angular-leaflet-directive@*" data-semver="0.7.15" src="https://cdn.rawgit.com/tombatossals/angular-leaflet-directive/d47897e0f784e8a6f12f3148fa6c92dd76abbb32/dist/angular-leaflet-directive.min.js"></script>
+   <script src='https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
+   <link href='https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src="./assets/js/angular-loading-overlay.js"></script>
+   <script src="./js/app.js"></script>
+   <script src="./js/http-service.js"></script>
+
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body ng-controller="MainController" >
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <div class="col s12 bs-loading-container" bs-loading-overlay bs-loading-overlay-reference-id="first">
+              <h2><img src="./assets/img/Barikoi logo.png" alt=""> Autocomplete</h2>
+            </div>
+            <div class="input-field col s12">
+              <i class="material-icons prefix">location_on</i><div class="error_message">{{error_message}}</div>
+              <input type="text" id="autocomplete-input" class="autocomplete" 
+              ng-class="{ searchBarFocus: focus, searchBarBlur: blur }"  name="search" placeholder="Start Typing.." typeahead-on-select='onSelect($item)' typeahead="user.Address for user in users($viewValue)" ng-model="selecting"  aria-autocomplete="list" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;" autocomplete="off"
+              >
+             
+              <span><small>Address format: House/Road/Block/Section/Area</small></span>
+            </div>
+
+            <div class="col s6">
+                <h5><i class="material-icons prefix">location_city</i> Address:</h5>
+                    <p><i>{{selected.Address}}  {{selected.area}}</i></p>
+                    <p> Code for your address : <strong>{{selected.uCode}}</strong></p>
+                    <p>Location Type: <strong>{{selected.pType}}</strong></p>
+                    <span><small>Please use the code next time to get things done faster</small></span>
+
+          </div>
+
+            <div class="col s6">
+              <div class="card">
+                <div class="card-content">
+                 <!--  <div class="card-image">
+                    <img src="image.png" alt="">
+                  </div> -->
+                  <leaflet center="center" lf-zoom="16" defaults="defaults" event-broadcast="events" markers="markers" height="30em" width="100%" layers="layers">
+                </div>
+
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Compiled and minified JavaScript -->
+    <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+   <!--  <script type="text/javascript">
+     document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.autocomplete');
+        var instances = M.Autocomplete.init(elems, options);
+      });
+      // Or with jQuery
+    $(document).ready(function(){
+    $('input.autocomplete').autocomplete({
+      data: {
+        "Apple": null,
+        "Microsoft": null,
+        "Google": 'https://placehold.it/250x250',
+        "Barikoi": 'markersize_69.png',
+        "Sarker Bari": null
+      },
+    });
+    });
+    </script> -->
+  </body>
+
+
+</html>
