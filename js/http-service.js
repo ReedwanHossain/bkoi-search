@@ -1,4 +1,4 @@
-myApp.factory('HttpService', function($http, $q){
+bkSearch.factory('HttpService', function($http, $q){
   return {
     post_anything : function(query){
       console.log(query);

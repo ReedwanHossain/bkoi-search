@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="bkSearch" lang="en">
+<html ng-app="bksearch" lang="en">
   <head>
     <meta charset="utf-8">
     <title>Barikoi Search Demo</title>
@@ -29,8 +29,10 @@
       <div class="row">
         <div class="col s12">
           <div class="row">
-            <div class="col s12 bs-loading-container" bs-loading-overlay bs-loading-overlay-reference-id="first">
-              <h2><img src="./assets/img/Barikoi logo.png" alt=""> Autocomplete</h2>
+            <div class="col wrapper s12 bs-loading-container" bs-loading-overlay bs-loading-overlay-reference-id="first">
+              <!-- <h2><img src="./assets/img/Barikoi logo.png" alt=""> Autocomplete</h2> -->
+              <img class="one" src="./assets/img/Barikoi logo.png" alt="">
+              <h3 class="two">Autocomplete</h3>
             </div>
             <div class="input-field col s12">
               <i class="material-icons prefix">location_on</i><div class="error_message">{{error_message}}</div>

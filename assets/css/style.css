@@ -1,22 +1,23 @@
 /* Styles go here */
 
-.input-field > ul{
-  width: -webkit-fill-available;
-  display: block;
+.input-field>ul {
+    width: -webkit-fill-available;
+    display: block;
     background: white;
     z-index: 1001;
     position: absolute;
     padding: inherit;
 
 }
-.searchfield > input{
-  border-bottom-right-radius: 3px !important;
-  border-top-right-radius: 3px !important;
+
+.searchfield>input {
+    border-bottom-right-radius: 3px !important;
+    border-top-right-radius: 3px !important;
 }
 
-.input-field > ul >li{
+.input-field>ul>li {
     margin: inherit;
-        padding: inherit;
+    padding: inherit;
     background: url('../img/markersize_69.png') no-repeat;
     background-position: right top;
     background-clip: padding-box;
@@ -24,13 +25,32 @@
 
 }
 
-.input-field > ul >li >a:focus{
+.input-field>ul>li>a:focus {
     color: #000;
     margin: inherit;
-        padding: inherit;
+    padding: inherit;
     background: url('../img/markersize_69.png') no-repeat;
     background-position: right top;
     background-clip: padding-box;
     background-size: contain;
 
+}
+
+.wrapper {
+    margin: 2em 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
+    /* grid-auto-rows: minmax(100px, auto); */
+}
+
+.one {
+    grid-column: 1 / 2;
+    grid-row: 1;
+}
+
+.two {
+    padding-top: .4em;
+    grid-column: 2 / 2;
+    grid-row: 1 / 2;
 }
