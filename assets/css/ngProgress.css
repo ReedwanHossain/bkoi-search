@@ -2,12 +2,13 @@
 #ngProgress {
     margin: 0;
     padding: 0;
-    z-index: 99998;
+    z-index: 100001;
     background-color: green;
     color: green;
     box-shadow: 0 0 10px 0; /* Inherits the font color */
     height: 2px;
     opacity: 0;
+    position: absolute;
 
     /* Add CSS3 styles for transition smoothing */
     -webkit-transition: all 0.5s ease-in-out;
@@ -24,17 +25,19 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 99999;
+    z-index: 100001;
 }
 
 .error_message
 {
      position: absolute;
-    margin: 0;
+    /* margin: 0;
     padding: 0;
     top: 0;
-    float: right;
+    float: right; */
     /*left: 0;*/
-    right: 0;
+    /* right: 0; */
+    margin: 1.3em 0 0 25.5em;
+    color: red;
     z-index: 99999;
 }

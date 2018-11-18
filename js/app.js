@@ -80,6 +80,8 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
       $scope.center.lng = parseFloat($scope.selected.longitude);
     };
     $scope.users = function(userName) {
+
+        console.log('loader')
       bsLoadingOverlayService.start({
                 referenceId: 'first'
         });
