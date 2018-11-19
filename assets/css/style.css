@@ -206,3 +206,18 @@ body,
     padding: 1em;
     background-color: #fff;
 }
+
+.barikoi-code text{
+    color: #549431;
+    font-weight: 600;
+    padding-left: 1em;
+}
+
+.sidebar {
+    position: absolute;
+    z-index: 2;
+    margin: 4.5em 0 0 .5em;
+    background-color: #fff;
+    padding: .5em;
+    border-radius: 10%;
+}

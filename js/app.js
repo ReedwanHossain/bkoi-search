@@ -1,6 +1,14 @@
 var bkSearch = angular.module("bksearch", ['ui.bootstrap', 'leaflet-directive', 'bsLoadingOverlay']);
 bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsLoadingOverlayService',
   function($scope, $timeout, HttpService, bsLoadingOverlayService) {
+      $scope.sidebar = function () {
+          console.log("show me dog")
+          if ($scope.addressDetails) {
+            $scope.addressDetails = false
+          } else {
+              $scope.addressDetails = true
+          }
+      }
     var minLength = 0;
 
      $scope.selected={};
