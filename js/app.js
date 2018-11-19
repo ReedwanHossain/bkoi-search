@@ -10,6 +10,7 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
           }
       }
     var minLength = 0;
+    $scope.no_result = true
 
      $scope.selected={};
         // 
@@ -81,6 +82,12 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
 
     $scope.onSelect = function(user){
       $scope.selected = user;
+        if ( $scope.selected !== null ) {
+            $scope.addressDetails = true
+        } else {
+            $scope.addressDetails = false
+        }
+
       console.log(user);
       $scope.markers.m1.lat = parseFloat($scope.selected.latitude);
       $scope.markers.m1.lng = parseFloat($scope.selected.longitude)
@@ -89,7 +96,7 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
     };
     $scope.users = function(userName) {
 
-        console.log('loader')
+        // console.log('loader')
       bsLoadingOverlayService.start({
                 referenceId: 'first'
         });

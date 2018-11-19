@@ -1,7 +1,7 @@
 bkSearch.factory('HttpService', function($http, $q){
   return {
     post_anything : function(query){
-      console.log(query);
+      // console.log(query);
       var deffered = $q.defer();
       var data = {
         'search' : query
