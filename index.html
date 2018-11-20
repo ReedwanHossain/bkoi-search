@@ -33,7 +33,7 @@
 </head>
 
 <body ng-controller="MainController">
-  <div class="bs-loading-container" bs-loading-overlay bs-loading-overlay-reference-id="first">
+  <div>
     <!-- <i class="material-icons prefix">location_on</i> -->
     <!-- <div class="error_message">{{error_message}}</div> -->
     <!-- <nav class="navbar sticky-top  flex-sm-nowrap p-0">
@@ -61,6 +61,9 @@
           <span><small>Please use the code next time to get things done faster</small></span>
     
         </div>
+        <div class="bs-loading-container loading-spin" bs-loading-overlay bs-loading-overlay-reference-id="first"></div>
+
+
         <div class="no-result" ng-if="error_message">
           <img src="assets/img/noresult.png" alt="">
         </div>

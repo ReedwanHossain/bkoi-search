@@ -28,16 +28,3 @@
     z-index: 100001;
 }
 
-.error_message
-{
-     position: absolute;
-    /* margin: 0;
-    padding: 0;
-    top: 0;
-    float: right; */
-    /*left: 0;*/
-    /* right: 0; */
-    margin: 1.3em 0 0 25.5em;
-    color: red;
-    z-index: 99999;
-}
