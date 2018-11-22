@@ -252,6 +252,17 @@ body,
     padding-top: .5em;
 }
 
+.loading-spin
+{
+    position: absolute;
+    margin: 0 0 0 26em;
+    z-index: 3;
+}
+
+.cross-icon{
+    margin: 1em 0 0px 20.5em;
+}
+
 /* MEDIA QUERIES */
 
 @media only screen 
@@ -327,6 +338,16 @@ and (-webkit-min-device-pixel-ratio: 2) {
     .place-icon {
         padding-top: 0;
     }
+
+    .loading-spin{
+        position: absolute;
+        margin: 0 0 0 13em;
+        z-index: 3;
+    }
+
+    .cross-icon{
+        margin: 1em 0 0px 11.5em;
+    }
     
 }
 
@@ -390,6 +411,15 @@ and (-webkit-min-device-pixel-ratio: 2) {
     .place-icon {
         padding-top: 0;
     }
+    .loading-spin{
+        position: absolute;
+        margin: 0 0 0 16em;
+        z-index: 3;
+    }
+
+    .cross-icon{
+        margin: 1em 0 0px 16em;
+    }
     
 }
 
@@ -449,7 +479,15 @@ and (-webkit-min-device-pixel-ratio: 2) {
         max-width: 100%;
         max-height: 100%;
     }
-    
+    .loading-spin{
+        position: absolute;
+        margin: 0 0 0 22em;
+        z-index: 3;
+    }
+
+    .cross-icon{
+        margin: 1em 0 0px 19em;
+    }
 }
 
 
@@ -493,6 +531,15 @@ and (-webkit-min-device-pixel-ratio: 2) {
         padding: .56em;
         border-radius: 10%;
     }
+
+    .loading-spin{
+        position: absolute;
+        margin: 0 0 0 28em;
+        z-index: 3;
+    }
     
+    .cross-icon{
+        margin: 1em 0 0px 22em;
+    }
 }
 

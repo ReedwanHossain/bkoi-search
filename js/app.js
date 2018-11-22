@@ -22,6 +22,11 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
     $scope.no_result = true
 
      $scope.selected={};
+
+     $scope.clear = function() {
+        $scope.selecting = null;
+        $scope.addressDetails = false;
+     }
         // 
      bsLoadingOverlayService.setGlobalConfig({
                 templateUrl: './templates/loader.html'
@@ -118,25 +123,28 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
       if (userName.length < minLength) {
         return [];
       }
-      $scope.loading = true;
+      $scope.loading = false;
       return HttpService.post_anything(userName).then(function(data){
         if (!Array.isArray(data.places)) {
            $scope.error_message = data.places.Message;
           bsLoadingOverlayService.stop({
                         referenceId: 'first'
                     });
+          $scope.loading = true;
         }
         else {
           $scope.error_message = '';
           bsLoadingOverlayService.stop({
                         referenceId: 'first'
                     });
+           $scope.loading = true;
         }
         return data.places;
       }, function(status){
         bsLoadingOverlayService.stop({
                         referenceId: 'first'
                     });
+         $scope.loading = true;
       });
     };
   }
