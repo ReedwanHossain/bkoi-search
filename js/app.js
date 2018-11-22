@@ -9,6 +9,15 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
               $scope.addressDetails = true
           }
       }
+
+      var local_icons = {
+        default_icon: {},
+        leaf_icon: {
+            iconUrl: 'assets/img/bmarker.png',
+            // iconSize:     [50, 64], // size of the icon
+        },
+    }
+
     var minLength = 0;
     $scope.no_result = true
 
@@ -36,8 +45,13 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
                         lat: 23.757087,
                         lng: 90.390370,
                         draggable: false,
-                    },
+                        // icon: {
+                        //     iconUrl: 'assets/img/bmarker.png'
+                        // },
+                        icon: local_icons.leaf_icon,
                 },
+                    },
+                    
 
                 events: { // or just {} //all events
                     map: {
