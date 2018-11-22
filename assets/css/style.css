@@ -190,8 +190,6 @@ body,
     background-color: #63f363;
 }
 
-.dropdown-menu li:last-child {}
-
 #type-selector {
     color: #fff;
     background-color: #4d90fe;
@@ -260,7 +258,13 @@ body,
 }
 
 .cross-icon{
-    margin: 1em 0 0px 20.5em;
+    margin: 0.65em 0 0px 19.8em;
+    background-color: white;
+    padding: 8px;
+    border-left: 1px grey;
+    /* border-style: solid; */
+    /* border-color: white; */
+    /* border-left-color: grey; */
 }
 
 /* MEDIA QUERIES */
@@ -341,12 +345,13 @@ and (-webkit-min-device-pixel-ratio: 2) {
 
     .loading-spin{
         position: absolute;
-        margin: 0 0 0 13em;
+        margin: 0 0 0 13.5em;
         z-index: 3;
     }
 
     .cross-icon{
-        margin: 1em 0 0px 11.5em;
+        margin: .65em 0 0px 11.5em;
+        padding: 7px;
     }
     
 }
@@ -354,6 +359,17 @@ and (-webkit-min-device-pixel-ratio: 2) {
 @media only screen 
 and (min-device-width: 768px)
 and (-webkit-min-device-pixel-ratio: 2) {
+
+        /* LEAFLET CLASS MODIFIED */
+
+        .leaflet-control-layers-toggle {
+            display: none;
+        }
+    
+        .leaflet-left .leaflet-control {
+            margin: .9em 0 0 .8em;
+        }
+
     #pac-input {
         background-color: #fff;
         /* font-size: 15px; */
@@ -413,12 +429,12 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
     .loading-spin{
         position: absolute;
-        margin: 0 0 0 16em;
+        margin: .3em 0 0 20em;
         z-index: 3;
     }
 
     .cross-icon{
-        margin: 1em 0 0px 16em;
+        margin: .95em 0 0px 15.9em;
     }
     
 }
@@ -481,12 +497,12 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
     .loading-spin{
         position: absolute;
-        margin: 0 0 0 22em;
+        margin: .4em 0 0 22.7em;
         z-index: 3;
     }
 
     .cross-icon{
-        margin: 1em 0 0px 19em;
+        margin: 1em 0 0px 17.7em;
     }
 }
 
@@ -534,12 +550,28 @@ and (-webkit-min-device-pixel-ratio: 2) {
 
     .loading-spin{
         position: absolute;
-        margin: 0 0 0 28em;
+        margin: .4em 0 0 29em;
         z-index: 3;
     }
     
     .cross-icon{
-        margin: 1em 0 0px 22em;
+        margin: .9em 0 0px 21.8em;
+    }
+
+    .no-result {
+        z-index: 2;
+        position: absolute;
+        width: 31.8em;
+        height: 15em;
+        margin: 5em 0 0 3.5em;
+        padding: 1em;
+        background-color: #fff;
+    }
+
+    .no-result img {
+        padding:0 0 0 5.5em;
+        max-width: 100%;
+        max-height: 100%;
     }
 }
 
