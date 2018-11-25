@@ -48,11 +48,11 @@
 
     <div>
         <i class="sidebar fas fa-bars" ng-click="sidebar()"></i>
-      <input id="pac-input" class="controls input-box" type="text"
+      <input id="pac-input" class="controls input-box" type="text" style="overflow: hidden;" 
         ng-class="{ searchBarFocus: focus, searchBarBlur: blur }" name="search" placeholder="House/Road/Block/Section/Area"
         typeahead-on-select='onSelect($item)' typeahead="user.Address for user in users($viewValue)" ng-model="selecting"
         aria-autocomplete="list" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;" autocomplete="off" >
-        <i class="material-icons loading-spin cross-icon" ng-if="loading" ng-click="clear()">clear</i>
+        <i class="material-icons  cross-icon" ng-if="loading" ng-click="clear()">clear</i>
         <!-- <div class="error_message">{{error_message}}</div> -->
         <div class="location-details" ng-show=addressDetails>
           <h5><i class="material-icons prefix place-icon">location_city</i> Address:</h5>

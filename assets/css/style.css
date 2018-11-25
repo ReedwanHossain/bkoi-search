@@ -255,6 +255,8 @@ body,
     position: absolute;
     margin: 0 0 0 26em;
     z-index: 3;
+    border-left: 1px grey;
+
 }
 
 .cross-icon{
@@ -262,6 +264,9 @@ body,
     background-color: white;
     padding: 8px;
     border-left: 1px grey;
+    position: absolute;
+    /*margin: 0 0 0 26em;*/
+    z-index: 3;
     /* border-style: solid; */
     /* border-color: white; */
     /* border-left-color: grey; */
