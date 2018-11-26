@@ -1,4 +1,4 @@
-<div class="lds-css ng-scope"><div style="width:100%;height:100%" class="lds-dual-ring"><div></div></div><style type="text/css">@keyframes lds-dual-ring {
+<div class="lds-css ng-scope"><div style="width:100%;height:100%;" class="lds-dual-ring"><div></div></div><style type="text/css">@keyframes lds-dual-ring {
   0% {
     -webkit-transform: rotate(0);
     transform: rotate(0);
@@ -22,11 +22,18 @@
   position: relative;
 }
 .lds-dual-ring div {
+  display: block;
   position: absolute;
-  width: 32px;
-  height: 32px;
+  margin-left: 4px;
+  margin-right: 2px;
+  width: 30px;
+  height: 30px;
   top: 2em;
-  left: 84px;
+  left: 6em;
+  background: white;
+  background-size: 32px 32px;
+  padding: 8px;
+  border-left: 1px grey;
   border-radius: 50%;
   border: 8px solid #000;
   border-color: #215d38 transparent #215d38 transparent;

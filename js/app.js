@@ -14,6 +14,7 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
         default_icon: {},
         leaf_icon: {
             iconUrl: 'assets/img/bmarker.png',
+            iconSize: [20, 20],
             // iconSize:     [50, 64], // size of the icon
         },
     }
@@ -50,10 +51,10 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
                         lat: 23.757087,
                         lng: 90.390370,
                         draggable: false,
-                        // icon: {
-                        //     iconUrl: 'assets/img/bmarker.png'
-                        // },
-                        icon: local_icons.leaf_icon,
+                        icon: {
+                            iconUrl: 'assets/img/bmarker.png',
+                            iconSize: [70,70]
+                        },
                 },
                     },
                     
