@@ -272,6 +272,13 @@ body,
     /* border-left-color: grey; */
 }
 
+.bs-button {
+    position: absolute;
+    z-index: 6;
+    margin: 7em 0 0 7em;
+}
+
+
 /* MEDIA QUERIES */
 
 @media only screen 
@@ -295,19 +302,20 @@ and (-webkit-min-device-pixel-ratio: 2) {
         /* font-size: 15px; */
         font-weight: 300;
         margin: 1em 0 0 2.65em;
-        padding: 0 0 0 0em;
+        /* padding: 0 0 0 0em; */
         text-overflow: ellipis;
-        width: 17em;
+        width: 100%;
         height: 2.4em;
     }   
 
     .location-details {
-        z-index: 2;
+        display: none;
+        /* z-index: 2;
         position: absolute;
         width: 16.7em;
         margin: 3.9em 0 0 2.9em;
         padding: 1em;
-        background-color: #fff;
+        background-color: #fff; */
     }
 
     .dropdown-menu {
@@ -320,6 +328,16 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .sidebar {
+        display: none;
+        /* position: absolute;
+        z-index: 2;
+        margin: 1em 0 0 0.40em;
+        background-color: #fff;
+        padding: .7em;
+        border-radius: 2%; */
+    }
+
+    .sidebar-mobile{
         position: absolute;
         z-index: 2;
         margin: 1em 0 0 0.40em;

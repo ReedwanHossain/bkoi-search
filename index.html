@@ -10,18 +10,19 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
+  <link data-require="angular-material@0.9.0" data-semver="0.9.0" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css" />
   <link rel="stylesheet" href="./assets/css/leaflet.css" />
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="stylesheet" href="/assets/css/ngProgress.css">
   <script src="./assets/js/leaflet.js"></script>
-  <script src="//code.angularjs.org/1.3.1/angular.js" data-semver="1.3.1" data-require="angular.js@*"></script>
-
-  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.min.js" data-semver="0.10.0" data-require="angular-ui-bootstrap@0.10.0"></script>
+  <!-- <script src="//code.angularjs.org/1.3.1/angular.js" data-semver="1.3.1" data-require="angular.js@*"></script> -->
+  <script data-require="angular.js@1.4.0" data-semver="1.4.0" src="https://code.angularjs.org/1.4.0/angular.js"></script>
   <script data-require="angular-leaflet-directive@*" data-semver="0.7.15" src="https://cdn.rawgit.com/tombatossals/angular-leaflet-directive/d47897e0f784e8a6f12f3148fa6c92dd76abbb32/dist/angular-leaflet-directive.min.js"></script>
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Niramit:300,400,500,600" rel="stylesheet">
 
 
@@ -47,30 +48,37 @@
     markers="markers"  layers="layers"> -->
 
     <div>
-        <i class="sidebar fas fa-bars" ng-click="sidebar()"></i>
-      <input id="pac-input" class="controls input-box" type="text" style="overflow: hidden;" 
-        ng-class="{ searchBarFocus: focus, searchBarBlur: blur }" name="search" placeholder="House/Road/Block/Section/Area"
-        typeahead-on-select='onSelect($item)' typeahead="user.Address for user in users($viewValue)" ng-model="selecting"
-        aria-autocomplete="list" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;" autocomplete="off" >
-        <i class="material-icons  cross-icon" ng-if="loading" ng-click="clear()">clear</i>
-        <!-- <div class="error_message">{{error_message}}</div> -->
-        <div class="location-details" ng-show=addressDetails>
-          <h5><i class="material-icons prefix place-icon">location_city</i> Address:</h5>
-          <p>{{selected.Address}} {{selected.area}}</p>
-          <p class="barikoi-code"> Code for your address : <text>{{selected.uCode}}</text></p>
-          <p>Location Type: <strong>{{selected.pType}}</strong></p>
-          <span><small>Please use the code next time to get things done faster</small></span>
-    
+      <i class="sidebar-mobile fas fa-bars" ng-click="showListBottomSheet()"></i>
+      <!-- <i class="sidebar fas fa-bars" ng-click="sidebar()"></i> -->
+      <input id="pac-input" class="controls input-box" type="text" style="overflow: hidden;" ng-class="{ searchBarFocus: focus, searchBarBlur: blur }"
+        name="search" placeholder="House/Road/Block/Section/Area" typeahead-on-select='onSelect($item)' typeahead="user.Address for user in users($viewValue)"
+        ng-model="selecting" aria-autocomplete="list" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;"
+        autocomplete="off">
+      <i class="material-icons  cross-icon" ng-if="loading" ng-click="clear()">clear</i>
+      <!-- <div class="error_message">{{error_message}}</div> -->
+      <div class="location-details" ng-show=addressDetails>
+        <h5><i class="material-icons prefix place-icon">location_city</i> Address:</h5>
+        <p>{{selected.Address}} {{selected.area}}</p>
+        <p class="barikoi-code"> Code for your address : <text>{{selected.uCode}}</text></p>
+        <p>Location Type: <strong>{{selected.pType}}</strong></p>
+        <span><small>Please use the code next time to get things done faster</small></span>
+
+      </div>
+      <div class="bs-loading-container loading-spin" bs-loading-overlay bs-loading-overlay-reference-id="first"></div>
+
+
+      <div class="no-result" ng-if="error_message">
+        <img src="assets/img/noresult.png" alt="">
+      </div>  
+
+      <div class="bottom-sheet-demo inset bs-button" layout="row" layout-sm="column" layout-align="center" >
+          <md-button flex="50" class="md-primary md-raised" ng-click="showListBottomSheet()">Show as List</md-button>
         </div>
-        <div class="bs-loading-container loading-spin" bs-loading-overlay bs-loading-overlay-reference-id="first"></div>
 
+      <!-- <i class="bs-button fas fa-angle-double-up"></i> -->
 
-        <div class="no-result" ng-if="error_message">
-          <img src="assets/img/noresult.png" alt="">
-        </div>
-
-      <leaflet class="b-map" id="map-canvas" center="center"
-        lf-zoom="16" defaults="defaults" event-broadcast="events" markers="markers" layers="layers">
+      <leaflet class="b-map" id="map-canvas" center="center" lf-zoom="16" defaults="defaults" event-broadcast="events"
+        markers="markers" layers="layers">
     </div>
 
     <!-- <div class="container-fluid">
@@ -119,6 +127,11 @@
   </div> -->
 
     <!-- Compiled and minified JavaScript -->
+    <script src="https://code.angularjs.org/1.4.0/angular-animate.js"></script>
+    <script src="https://code.angularjs.org/1.4.0/angular-aria.js"></script>
+    <script  src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.min.js" data-semver="0.10.0" data-require="angular-ui-bootstrap@0.10.0"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
