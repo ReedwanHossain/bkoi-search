@@ -48,8 +48,8 @@
     markers="markers"  layers="layers"> -->
 
     <div>
-      <i class="sidebar-mobile fas fa-bars" ng-click="showListBottomSheet()"></i>
-      <!-- <i class="sidebar fas fa-bars" ng-click="sidebar()"></i> -->
+      <i class="sidebar-mobile fas fa-bars" ng-show="sidebarMobile" ng-click="showListBottomSheet()"></i>
+      <i class="sidebar fas fa-bars" ng-hide="sidebarFull" ng-click="sidebar()"></i>
       <input id="pac-input" class="controls input-box" type="text" style="overflow: hidden;" ng-class="{ searchBarFocus: focus, searchBarBlur: blur }"
         name="search" placeholder="House/Road/Block/Section/Area" typeahead-on-select='onSelect($item)' typeahead="user.Address for user in users($viewValue)"
         ng-model="selecting" aria-autocomplete="list" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;"
@@ -71,9 +71,11 @@
         <img src="assets/img/noresult.png" alt="">
       </div>  
 
-      <div class="bottom-sheet-demo inset bs-button" layout="row" layout-sm="column" layout-align="center" >
-          <md-button flex="50" class="md-primary md-raised" ng-click="showListBottomSheet()">Show as List</md-button>
+      <!-- <div class="bs-button" ng-click="NoResultBottomSheet()">
+        <div class="bottom-sheet-demo inset " layout="row" layout-sm="column" layout-align="center" >
+          <md-button flex="50" class="md-primary md-raised" ng-click="openBottomSheet()">Show as List</md-button>
         </div>
+      </div> -->
 
       <!-- <i class="bs-button fas fa-angle-double-up"></i> -->
 

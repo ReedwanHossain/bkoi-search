@@ -1,14 +1,35 @@
 var bkSearch = angular.module("bksearch", ['ui.bootstrap', 'leaflet-directive', 'bsLoadingOverlay', 'ngMaterial']);
 bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsLoadingOverlayService', '$mdBottomSheet',
-    function ($scope, $timeout, HttpService, bsLoadingOverlayService, $mdBottomSheet, Holder) {
+    function ($scope, $timeout, HttpService, bsLoadingOverlayService, $mdBottomSheet) {
+
+        //sidebar hide for mobile and web
+        if (screen.width < 768) {
+            console.log($scope.sidebarFull)
+            console.log($scope.sidebarMobile)
+            $scope.sidebarFull = true
+            $scope.sidebarMobile = true
+            $scope.addressDetails = false
+        }
+
+        //address details hide & show
+        // $scope.addressDetails = false
         $scope.sidebar = function () {
-            console.log("show me dog")
+            console.log("in address details")
             if ($scope.addressDetails) {
+                console.log($scope.addressDetails)
                 $scope.addressDetails = false
             } else {
+                console.log($scope.addressDetails)
                 $scope.addressDetails = true
             }
         }
+
+        // address menu show & hide
+
+
+
+        // $scope.sidebarFull = false
+        // $scope.sidebarMobile = false
 
         var local_icons = {
             default_icon: {},
@@ -101,21 +122,21 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
             }
         });
 
-        // $scope.pls = "please"
-        // $scope.$watch('pls',function(newValue){
-        //     $rootScope.shared=$scope.pls
-        //     })
-
         $scope.onSelect = function (user) {
             $scope.selected = user;
 
             localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
 
             if ($scope.selected !== null) {
-                $scope.addressDetails = true
-                // $scope.showListBottomSheet()
+                console.log("inselected")
+                if (screen.width < 768) {
+                    $scope.showListBottomSheet()
+                } else {
+                    $scope.addressDetails = true
+                }
             } else {
                 $scope.addressDetails = false
+
             }
 
             console.log(user);
@@ -137,10 +158,19 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
             $scope.loading = false;
             return HttpService.post_anything(userName).then(function (data) {
                 if (!Array.isArray(data.places)) {
+                    
                     $scope.error_message = data.places.Message;
+
+                    if ($scope.error_message) {
+                        console.log("mobile error and view")
+                        $scope.NoResultBottomSheet()
+                    }
+
+                    console.log($scope.error_message)
                     bsLoadingOverlayService.stop({
                         referenceId: 'first'
                     });
+
                     $scope.loading = true;
                 } else {
                     $scope.error_message = '';
@@ -154,53 +184,53 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
                 bsLoadingOverlayService.stop({
                     referenceId: 'first'
                 });
+
                 $scope.loading = true;
             });
+
         };
+
+
+
+
+        //bottomsheet function
 
         $scope.showListBottomSheet = function () {
             console.log("ello")
             $scope.alert = '';
             $mdBottomSheet.show({
-                templateUrl: 'templates/test.html',
+                templateUrl: 'templates/location-details.html',
                 controller: 'ListBottomSheetCtrl'
-            }).then(function ( clickedItem ) {
+            }).then(function (clickedItem) {
                 $scope.alert = clickedItem['name'] + ' clicked!';
-            }).catch(function ( error ) {
+            }).catch(function (error) {
                 // User clicked outside or hit escape
             })
+
         }
+
+        // $scope.NoResultBottomSheet = function () {
+        //     console.log("show bottonsheet pls")
+        //     $scope.alert = '';
+        //     $mdBottomSheet.show({
+        //         templateUrl: 'templates/noResult.html',
+        //         // controller: 'NoResultBottomSheet'
+        //     }).then(function (clickedItem) {
+        //         $scope.alert = clickedItem['name'] + ' clicked!';
+        //     }).catch(function (error) {
+        //         // User clicked outside or hit escape
+        //     })
+
+        // }
+
     }
 ]);
 
-bkSearch.service('Holder', function($rootScope){
-    return { text: 'ddd' };
-});
+bkSearch.controller('ListBottomSheetCtrl', function ($scope, $mdBottomSheet) {
 
-bkSearch.controller('ListBottomSheetCtrl', function ($rootScope, $scope, $mdBottomSheet, Holder) {
-
-    // $scope.location = JSON.parse(localStorage.getItem('selectedLocation'))
     $scope.location = []
     $scope.location.push(JSON.parse(localStorage.getItem('selectedLocation')))
     console.log($scope.location)
-
-    $scope.items = [{
-            name: 'Share',
-            icon: 'share-arrow'
-        },
-        {
-            name: 'Upload',
-            icon: 'upload'
-        },
-        {
-            name: 'Copy',
-            icon: 'copy'
-        },
-        {
-            name: 'Print this page',
-            icon: 'print'
-        },
-    ]
 
     $scope.listItemClick = function ($index) {
         var clickedItem = $scope.items[$index];
@@ -208,12 +238,18 @@ bkSearch.controller('ListBottomSheetCtrl', function ($rootScope, $scope, $mdBott
     }
 })
 
-// bkSearchmodule.factory('userServices', function(){
+bkSearch.controller( 'NoResultBottomSheet', function ( $scope, $mdBottomSheet ) {
+    $scope.NoResultBottomSheet = function () {
+        console.log("show bottonsheet pls")
+        $scope.alert = '';
+        $mdBottomSheet.show({
+            templateUrl: 'templates/noResult.html',
+            // controller: 'NoResultBottomSheet'
+        }).then(function (clickedItem) {
+            $scope.alert = clickedItem['name'] + ' clicked!';
+        }).catch(function (error) {
+            // User clicked outside or hit escape
+        })
 
-// 	let fac = {};
-
-// 	fac.users = ['John', 'James', 'Jake']; 
-
-// 	return fac;
-
-// });
+    }
+})

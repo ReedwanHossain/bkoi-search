@@ -230,6 +230,7 @@ body,
 }
 
 .no-result {
+    visibility: visible;
     border-radius: 0.5%;
     z-index: 2;
     position: absolute;
@@ -273,11 +274,19 @@ body,
 }
 
 .bs-button {
+    z-index: 10001;
+    margin: 5em;
     position: absolute;
-    z-index: 6;
-    margin: 7em 0 0 7em;
 }
 
+.sidebar-mobile {
+    position: absolute;
+    z-index: 2;
+    margin: 4.5em 0 0 .5em;
+    background-color: #fff;
+    padding: .5em;
+    border-radius: 10%;
+}
 
 /* MEDIA QUERIES */
 
@@ -304,18 +313,18 @@ and (-webkit-min-device-pixel-ratio: 2) {
         margin: 1em 0 0 2.65em;
         /* padding: 0 0 0 0em; */
         text-overflow: ellipis;
-        width: 100%;
+        width: 17em;
         height: 2.4em;
     }   
 
     .location-details {
-        display: none;
-        /* z-index: 2;
+        visibility: hidden;
+        z-index: 2;
         position: absolute;
         width: 16.7em;
         margin: 3.9em 0 0 2.9em;
         padding: 1em;
-        background-color: #fff; */
+        background-color: #fff;
     }
 
     .dropdown-menu {
@@ -328,13 +337,12 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .sidebar {
-        display: none;
-        /* position: absolute;
+        position: absolute;
         z-index: 2;
         margin: 1em 0 0 0.40em;
         background-color: #fff;
         padding: .7em;
-        border-radius: 2%; */
+        border-radius: 2%;
     }
 
     .sidebar-mobile{
@@ -347,6 +355,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .no-result {
+        visibility: hidden;
         z-index: 2;
         position: absolute;
         width: 16.7em;
@@ -374,7 +383,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
 
     .cross-icon{
         margin: .65em 0 0px 11.5em;
-        padding: 7px;
+        padding: 6px;
     }
     
 }
@@ -405,6 +414,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }   
 
     .location-details {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 23em;
@@ -429,9 +439,10 @@ and (-webkit-min-device-pixel-ratio: 2) {
         background-color: #fff;
         padding: .5em;
         border-radius: 10%;
-    }
+    }  
 
     .no-result {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 23em;
@@ -504,6 +515,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .no-result {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 25.8em;
@@ -582,6 +594,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .no-result {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 31.8em;

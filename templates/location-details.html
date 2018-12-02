@@ -1,4 +1,4 @@
-<md-bottom-sheet class="md-list md-has-header" style="background-color: black;">
+<!-- <md-bottom-sheet class="md-list md-has-header" style="background-color: black;">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
       <link data-require="angular-material@0.9.0" data-semver="0.9.0" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css" />
@@ -35,21 +35,43 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-</md-bottom-sheet>
+</md-bottom-sheet> -->
 
 <!-- test -->
-<!-- <link rel="stylesheet" href="assets/css/bottomsheet.css">
-<md-bottom-sheet class="md-grid" layout="column">
 
-    <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">Card with image</span>
-                <span class="md-subhead">Large</span>
-            </md-card-title-text>
 
-        </md-card-title>
 
-    </md-card>
-    </div>
-</md-bottom-sheet> -->
+<md-bottom-sheet style="background-color: black; color: antiquewhite;">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link data-require="angular-material@0.9.0" data-semver="0.9.0" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css" />
+
+
+    <!-- <div ng-cloak> -->
+        <!-- <md-content class="md-padding" layout-xs="column" layout="row"> -->
+
+            <md-card style="background-color: black; color: antiquewhite;">
+                <md-card-header>
+                    </md-card-header>
+                    <md-card-title>
+                        <md-card-title-text style="padding:.5em 0 0 1em">
+                            <span class="md-headline">{{location[0].uCode}}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <!-- <i class="material-icons prefix place-icon" style="padding-left:.65em;">location_city</i> -->
+                    <md-card-header-text style="padding:.5em 0 0 1em">
+                      <span></span>  {{location[0].Address}}, {{location[0].Area}}
+                    </md-card-header-text>
+                <md-card-content>
+                    <p>
+                        Location Type: {{location[0].pType}}
+                    </p>
+                </md-card-content>
+            </md-card>
+
+        <!-- </md-content> -->
+    <!-- </div> -->
+
+    <script src="https://code.angularjs.org/1.4.0/angular-animate.js"></script>
+    <script src="https://code.angularjs.org/1.4.0/angular-aria.js"></script>
+    <script  src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.js"></script>
+</md-bottom-sheet>
