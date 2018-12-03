@@ -12,7 +12,6 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
         }
 
         //address details hide & show
-        // $scope.addressDetails = false
         $scope.sidebar = function () {
             console.log("in address details")
             if ($scope.addressDetails) {
@@ -23,13 +22,6 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
                 $scope.addressDetails = true
             }
         }
-
-        // address menu show & hide
-
-
-
-        // $scope.sidebarFull = false
-        // $scope.sidebarMobile = false
 
         var local_icons = {
             default_icon: {},
@@ -74,7 +66,8 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
                     draggable: false,
                     icon: {
                         iconUrl: 'assets/img/bmarker.png',
-                        iconSize: [70, 70]
+                        iconSize: [70, 70],
+                        iconAnchor: [50, 50]
                     },
                 },
             },
@@ -144,10 +137,10 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
             $scope.markers.m1.lng = parseFloat($scope.selected.longitude)
             $scope.center.lat = parseFloat($scope.selected.latitude);
             $scope.center.lng = parseFloat($scope.selected.longitude);
+            $scope.center.zoom = 17
         };
         $scope.users = function (userName) {
 
-            // console.log('loader')
             bsLoadingOverlayService.start({
                 referenceId: 'first'
             });
@@ -160,11 +153,6 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
                 if (!Array.isArray(data.places)) {
                     
                     $scope.error_message = data.places.Message;
-
-                    if ($scope.error_message) {
-                        console.log("mobile error and view")
-                        $scope.NoResultBottomSheet()
-                    }
 
                     console.log($scope.error_message)
                     bsLoadingOverlayService.stop({
@@ -208,21 +196,6 @@ bkSearch.controller("MainController", ['$scope', '$timeout', 'HttpService', 'bsL
             })
 
         }
-
-        // $scope.NoResultBottomSheet = function () {
-        //     console.log("show bottonsheet pls")
-        //     $scope.alert = '';
-        //     $mdBottomSheet.show({
-        //         templateUrl: 'templates/noResult.html',
-        //         // controller: 'NoResultBottomSheet'
-        //     }).then(function (clickedItem) {
-        //         $scope.alert = clickedItem['name'] + ' clicked!';
-        //     }).catch(function (error) {
-        //         // User clicked outside or hit escape
-        //     })
-
-        // }
-
     }
 ]);
 
