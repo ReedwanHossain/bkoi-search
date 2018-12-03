@@ -355,7 +355,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .no-result {
-        visibility: hidden;
+        /* visibility: hidden; */
         z-index: 2;
         position: absolute;
         width: 16.7em;
