@@ -1,121 +1,3 @@
-/* .input-field>ul {
-    width: -webkit-fill-available;
-    display: grid;
-    color: #000;
-    background:#fff !important;
-    z-index: 1001;
-    position: absolute;
-    padding: inherit;
-
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    display: inline-grid;
-    float: left;
-    min-width: 5rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
-    font-size: 1rem;
-    color: #000;
-    text-align: left;
-    list-style: none;
-    background-color: #fff !important;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: .25rem;
-}
-
-ul.dropdown-menu {
-    display: none;
-}
-
-
-.searchfield>input {
-    border-bottom-right-radius: 3px !important;
-    border-top-right-radius: 3px !important;
-}
-
-.input-field>ul>li {
-    margin: inherit;
-    padding: inherit;
-    background: url('../img/markersize_69.png') no-repeat;
-    background-position: right top;
-    background-clip: padding-box;
-    background-size: contain;
-
-}
-
-.input-field>ul>li>a:focus {
-    color: #000;
-    margin: inherit;
-    padding: inherit;
-    background: url('../img/markersize_69.png') no-repeat;
-    background-position: right top;
-    background-clip: padding-box;
-    background-size: contain;
-
-}
-
-.form-bkoi,
-.form-bkoi:focus {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: none !important;
-}
-
-.form-bkoi {
-   
-    max-width: 50% !important;
-} */
-
-/*
-.bkoi-logo {
-    text-align: center;
-    max-width: 30%;
-}
-
-html, body, #map-canvas {
-    height: 100%;
-    margin: 0px;
-    padding: 0px
-  }
-
-.controls {
-    margin-top: 16px;
-    border: 1px solid transparent;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 32px;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#pac-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 400px;
-  }
-
-  #pac-input:focus {
-    border-color: #4d90fe;
-  }
-
-
-@media only screen 
-and (min-device-width: 320px)
-and (-webkit-min-device-pixel-ratio: 2) {
-
-} */
-
 .input-box {
     position: absolute;
     width: 28em;
@@ -230,6 +112,7 @@ body,
 }
 
 .no-result {
+    visibility: visible;
     border-radius: 0.5%;
     z-index: 2;
     position: absolute;
@@ -272,6 +155,21 @@ body,
     /* border-left-color: grey; */
 }
 
+.bs-button {
+    z-index: 10001;
+    margin: 5em;
+    position: absolute;
+}
+
+.sidebar-mobile {
+    position: absolute;
+    z-index: 2;
+    margin: 4.5em 0 0 .5em;
+    background-color: #fff;
+    padding: .5em;
+    border-radius: 10%;
+}
+
 /* MEDIA QUERIES */
 
 @media only screen 
@@ -295,13 +193,14 @@ and (-webkit-min-device-pixel-ratio: 2) {
         /* font-size: 15px; */
         font-weight: 300;
         margin: 1em 0 0 2.65em;
-        padding: 0 0 0 0em;
+        /* padding: 0 0 0 0em; */
         text-overflow: ellipis;
         width: 17em;
         height: 2.4em;
     }   
 
     .location-details {
+        visibility: hidden;
         z-index: 2;
         position: absolute;
         width: 16.7em;
@@ -328,7 +227,17 @@ and (-webkit-min-device-pixel-ratio: 2) {
         border-radius: 2%;
     }
 
+    .sidebar-mobile{
+        position: absolute;
+        z-index: 2;
+        margin: 1em 0 0 0.40em;
+        background-color: #fff;
+        padding: .7em;
+        border-radius: 2%;
+    }
+
     .no-result {
+        /* visibility: hidden; */
         z-index: 2;
         position: absolute;
         width: 16.7em;
@@ -350,13 +259,13 @@ and (-webkit-min-device-pixel-ratio: 2) {
 
     .loading-spin{
         position: absolute;
-        margin: 0 0 0 13.5em;
+        margin: 0 0 0 13.4em;
         z-index: 3;
     }
 
     .cross-icon{
         margin: .65em 0 0px 11.5em;
-        padding: 7px;
+        padding: 6px;
     }
     
 }
@@ -387,6 +296,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }   
 
     .location-details {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 23em;
@@ -411,9 +321,10 @@ and (-webkit-min-device-pixel-ratio: 2) {
         background-color: #fff;
         padding: .5em;
         border-radius: 10%;
-    }
+    }  
 
     .no-result {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 23em;
@@ -486,6 +397,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .no-result {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 25.8em;
@@ -564,6 +476,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
 
     .no-result {
+        visibility: visible;
         z-index: 2;
         position: absolute;
         width: 31.8em;
