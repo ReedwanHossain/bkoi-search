@@ -1,6 +1,6 @@
 var bkSearch = angular.module("bksearch");
-bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'HttpService', 'bsLoadingOverlayService', '$mdBottomSheet',
-    function ($scope, $stateParams, $timeout, HttpService, bsLoadingOverlayService, $mdBottomSheet) {
+bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'HttpService', '$http', 'bsLoadingOverlayService', '$mdBottomSheet', '$rootScope',
+    function ($scope, $stateParams, $timeout, HttpService, $http, bsLoadingOverlayService, $mdBottomSheet, $rootScope) {
         console.log('query');
         //sidebar hide for mobile and web
         if (screen.width < 768) {
@@ -44,7 +44,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             center: {
                 lat: 23.757087,
                 lng: 90.390370,
-                zoom: 16
+                zoom: 18
             },
             defaults: {
                 zoomAnimation: true,
@@ -60,7 +60,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
                     icon: {
                         iconUrl: 'assets/img/bmarker.png',
                         iconSize: [70, 70],
-                        iconAnchor: [50, 50]
+                        iconAnchor: [25, 55]
                     },
                 },
             },
@@ -68,7 +68,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
 
             events: { // or just {} //all events
                 map: {
-                    enable: ['moveend', 'popupopen'],
+                    enable: ['moveend', 'popupopen', 'click'],
                     logic: 'emit'
                 },
                 markers: {
@@ -133,6 +133,53 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             });
         }
         init()
+
+        //reverse geocoding
+
+        $scope.$on("leafletDirectiveMap.click", function (event, args) {
+            console.log(args.leafletEvent.latlng)
+
+            $scope.markers.m1.lat = args.leafletEvent.latlng.lat
+            $scope.markers.m1.lng = args.leafletEvent.latlng.lng
+
+            const markerLatitude = $scope.markers.m1.lat
+            const markerLongitude = $scope.markers.m1.lng
+
+            let paramData = {
+                params: {
+                    latitude: markerLatitude,
+                    longitude: markerLongitude
+                }
+            }
+
+            //[""0""] latlng.lat
+
+            $http.get("https://barikoi.xyz/v1/reverse/without/auth", paramData)
+                .success(function (response) {
+                    $scope.selected = response[0]
+                    // $rootScope.error_message
+
+                    localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
+
+                    if ($scope.selected) {
+
+                        console.log("in selected & found")
+                        $rootScope.error_message = false
+
+                        if (screen.width < 768) {
+                            $scope.showListBottomSheet()
+                        } else {
+                            $scope.addressDetails = true
+                        }
+                    } else {
+
+                        console.log("in selected & notNound")
+
+                        $rootScope.error_message = true
+                        $scope.addressDetails = false
+                    }
+                })
+        })
 
         $scope.onSelect = function (user) {
             $scope.selected = user;
@@ -215,6 +262,8 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             })
 
         }
+
+
     }
 ]);
 
