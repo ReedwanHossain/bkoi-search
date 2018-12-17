@@ -1,7 +1,7 @@
 var bkSearch = angular.module("bksearch");
-bkSearch.controller("MainController", ['$scope', '$stateParams', 'HttpService', '$http', 'bsLoadingOverlayService', '$mdBottomSheet', '$rootScope',
+bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'HttpService', '$http', 'bsLoadingOverlayService', '$mdBottomSheet', '$rootScope', '$location',
 
-    function ($scope, $stateParams, HttpService, $http, bsLoadingOverlayService, $mdBottomSheet, $rootScope) {
+    function ($scope, $stateParams, $timeout, HttpService, $http, bsLoadingOverlayService, $mdBottomSheet, $rootScope, $location) {
         console.log('query');
 
         //sidebar hide for mobile and web
@@ -25,8 +25,6 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', 'HttpService', 
             }
         }
 
-
-
         var minLength = 0;
         $scope.no_result = true
 
@@ -36,10 +34,11 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', 'HttpService', 
             $scope.selecting = null;
             $scope.addressDetails = false;
         }
+
         // 
         bsLoadingOverlayService.setGlobalConfig({
             templateUrl: './templates/loader.html'
-        });
+        })
 
 
         angular.extend($scope, {
@@ -142,6 +141,63 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', 'HttpService', 
 
             localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
 
+            //get shareble link
+
+            let url = $location.absUrl().split('?')[0]
+
+            console.log(url.length)
+
+            $scope.shareUrl = url + $scope.selected.uCode
+
+            let elementForShareUrl = function () {
+
+                var dummy = document.createElement("input")
+
+                document.body.appendChild(dummy)
+
+                dummy.setAttribute("id", "dummy_id")
+
+                document.getElementById("dummy_id").value = $scope.shareUrl
+
+                dummy.select()
+
+                document.execCommand("copy")
+
+                document.body.removeChild(dummy)
+            }
+
+            const showCopiedInfo = function () {
+                
+                $timeout( function () {
+
+                    $scope.linkCopyInfo = false
+
+                }, 1000)
+
+            }
+
+            $scope.copyShareLink = function () {
+
+                if (url.length > 28) {
+                    $scope.shareUrl
+
+                    elementForShareUrl()
+                    $scope.linkCopyInfo = true
+                    showCopiedInfo()
+
+                } else {
+
+                    url = url + $scope.selected.uCode
+
+                    $scope.shareUrl = url
+
+                    elementForShareUrl()
+                    $scope.linkCopyInfo = true
+                    showCopiedInfo()
+
+                }
+            }
+
             if ($scope.selected !== null) {
                 console.log("in selected")
                 if (screen.width < 768) {
@@ -173,14 +229,12 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', 'HttpService', 
             const markerLatitude = $scope.markers.m1.lat
             const markerLongitude = $scope.markers.m1.lng
 
-            let paramData = {
+            const paramData = {
                 params: {
                     latitude: markerLatitude,
                     longitude: markerLongitude
                 }
             }
-
-            //[""0""] latlng.lat
 
             $http.get("https://barikoi.xyz/v1/reverse/without/auth", paramData)
                 .success(function (response) {
@@ -267,15 +321,6 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', 'HttpService', 
             })
 
         }
-
-        //Reverse Geocoding
-
-        // $scope.events = {
-        //     map: {
-        //         enable: leafletMapEvents.getAvailableMapEvents(),
-        //         logic: 'emit'
-        //     }
-        // }
 
     }
 ]);

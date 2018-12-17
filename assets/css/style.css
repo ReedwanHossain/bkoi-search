@@ -170,6 +170,20 @@ body,
     border-radius: 10%;
 }
 
+.share-section {
+    margin: 0;
+    padding-top: .7em;
+    cursor: pointer;
+}
+
+.share-section .text {
+    padding-left: .5em;
+}
+
+.share-section .clipboard, .share-section .text {
+    display: inline;
+}
+
 /* MEDIA QUERIES */
 
 @media only screen 
