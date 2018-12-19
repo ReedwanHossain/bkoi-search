@@ -1,7 +1,9 @@
 var bkSearch = angular.module("bksearch");
-bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'HttpService', 'bsLoadingOverlayService', '$mdBottomSheet',
-    function ($scope, $stateParams, $timeout, HttpService, bsLoadingOverlayService, $mdBottomSheet) {
+bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'HttpService', '$http', 'bsLoadingOverlayService', '$mdBottomSheet', '$rootScope', '$location',
+
+    function ($scope, $stateParams, $timeout, HttpService, $http, bsLoadingOverlayService, $mdBottomSheet, $rootScope, $location) {
         console.log('query');
+
         //sidebar hide for mobile and web
         if (screen.width < 768) {
             console.log($scope.sidebarFull)
@@ -23,8 +25,6 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             }
         }
 
-        
-
         var minLength = 0;
         $scope.no_result = true
 
@@ -34,17 +34,17 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             $scope.selecting = null;
             $scope.addressDetails = false;
         }
+
         // 
         bsLoadingOverlayService.setGlobalConfig({
             templateUrl: './templates/loader.html'
-        });
-
+        })
 
         angular.extend($scope, {
             center: {
                 lat: 23.757087,
                 lng: 90.390370,
-                zoom: 16
+                zoom: 17
             },
             defaults: {
                 zoomAnimation: true,
@@ -59,8 +59,11 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                     draggable: false,
                     icon: {
                         iconUrl: 'assets/img/bmarker.png',
-                        iconSize: [70, 70],
-                        iconAnchor: [50, 50]
+                        iconSize: [40, 50],
+                        iconAnchor: [22, 47],
+                        popupAnchor: [6, -26],
+                        shadowAnchor: [15, 17],
+                        shadowSize: [41, 21],
                     },
                 },
             },
@@ -68,7 +71,7 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
 
             events: { // or just {} //all events
                 map: {
-                    enable: ['moveend', 'popupopen'],
+                    enable: ['moveend', 'popupopen', 'click'],
                     logic: 'emit'
                 },
                 markers: {
@@ -85,7 +88,8 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                         type: 'xyz',
                         layerOptions: {
                             attribution: 'Barikoi',
-                            maxZoom: 23
+                            maxZoom: 23,
+                            // minZoom: 18
                         },
                     },
 
@@ -98,7 +102,8 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                             apikey: 'pk.eyJ1Ijoicmhvc3NhaW4iLCJhIjoiY2o4Ymt0NndlMHVoMDMzcnd1ZGs4dnJjMSJ9.5Y-mrWQCMXqWTe__0J5w4w',
                             mapid: 'mapbox.streets',
                             attribution: 'barikoi',
-                            maxZoom: 23
+                            maxZoom: 23,
+                            // minZoom: 16
                         },
                         layerParams: {
                             showOnSelector: true
@@ -108,26 +113,27 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             }
         });
 
-        var init = function() {
+        var init = function () {
             HttpService.post_anything($stateParams.query).then(function (data) {
+
                 console.log($stateParams.query)
                 if (Array.isArray(data.places)) {
-                     $scope.selected = data.places[0];
-                      localStorage.setItem('selectedLocation', JSON.stringify(data.places[0]))
-                     if (screen.width < 768) {
-                    $scope.showListBottomSheet();
-                } else {
-                    $scope.addressDetails = true
+                    $scope.selected = data.places[0];
+                    localStorage.setItem('selectedLocation', JSON.stringify(data.places[0]))
+                    if (screen.width < 768) {
+                        $scope.showListBottomSheet();
+                    } else {
+                        $scope.addressDetails = true
+                    }
+
                 }
-                   
-                } 
-            
-            $scope.markers.m1.lat = parseFloat($scope.selected.latitude);
-            $scope.markers.m1.lng = parseFloat($scope.selected.longitude)
-            $scope.center.lat = parseFloat($scope.selected.latitude);
-            $scope.center.lng = parseFloat($scope.selected.longitude);
-            $scope.center.zoom = 17
-                
+
+                $scope.markers.m1.lat = parseFloat($scope.selected.latitude);
+                $scope.markers.m1.lng = parseFloat($scope.selected.longitude)
+                $scope.center.lat = parseFloat($scope.selected.latitude);
+                $scope.center.lng = parseFloat($scope.selected.longitude);
+                $scope.center.zoom = 18
+
             }, function (status) {
                 $scope.loading = true;
             });
@@ -139,8 +145,65 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
 
             localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
 
+            //get shareble link
+
+            let url = $location.absUrl().split('?')[0]
+
+            console.log(url.length)
+
+            $scope.shareUrl = url + $scope.selected.uCode
+
+            let elementForShareUrl = function () {
+
+                var dummy = document.createElement("input")
+
+                document.body.appendChild(dummy)
+
+                dummy.setAttribute("id", "dummy_id")
+
+                document.getElementById("dummy_id").value = $scope.shareUrl
+
+                dummy.select()
+
+                document.execCommand("copy")
+
+                document.body.removeChild(dummy)
+            }
+
+            const showCopiedInfo = function () {
+
+                $timeout(function () {
+
+                    $scope.linkCopyInfo = false
+
+                }, 1000)
+
+            }
+
+            $scope.copyShareLink = function () {
+
+                if (url.length > 28) {
+                    $scope.shareUrl
+
+                    elementForShareUrl()
+                    $scope.linkCopyInfo = true
+                    showCopiedInfo()
+
+                } else {
+
+                    url = url + $scope.selected.uCode
+
+                    $scope.shareUrl = url
+
+                    elementForShareUrl()
+                    $scope.linkCopyInfo = true
+                    showCopiedInfo()
+
+                }
+            }
+
             if ($scope.selected !== null) {
-                console.log("inselected")
+                console.log("in selected")
                 if (screen.width < 768) {
                     $scope.showListBottomSheet()
                 } else {
@@ -157,21 +220,68 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             $scope.center.lat = parseFloat($scope.selected.latitude);
             $scope.center.lng = parseFloat($scope.selected.longitude);
             $scope.center.zoom = 17
-        };
+        }
+
+        //Reverse Geocoding
+
+        $scope.$on("leafletDirectiveMap.click", function (event, args) {
+            console.log(args.leafletEvent.latlng)
+
+            $scope.markers.m1.lat = args.leafletEvent.latlng.lat
+            $scope.markers.m1.lng = args.leafletEvent.latlng.lng
+
+            const markerLatitude = $scope.markers.m1.lat
+            const markerLongitude = $scope.markers.m1.lng
+
+            const paramData = {
+                params: {
+                    latitude: markerLatitude,
+                    longitude: markerLongitude
+                }
+            }
+
+            $http.get("https://barikoi.xyz/v1/reverse/without/auth", paramData)
+                .success(function (response) {
+                    $scope.selected = response[0]
+                    // $rootScope.error_message
+
+                    localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
+
+                    if ($scope.selected) {
+
+                        console.log("in selected & found")
+                        $rootScope.error_message = false
+
+                        if (screen.width < 768) {
+                            $scope.showListBottomSheet()
+                        } else {
+                            $scope.addressDetails = true
+                        }
+                    } else {
+
+                        console.log("in selected & notNound")
+
+                        $rootScope.error_message = true
+                        $scope.addressDetails = false
+                    }
+                })
+        })
+
+
         $scope.users = function (userName) {
 
             bsLoadingOverlayService.start({
                 referenceId: 'first'
             });
-            $scope.error_message = '';
+            $rootScope.error_message = '';
             if (userName.length < minLength) {
                 return [];
             }
             $scope.loading = false;
             return HttpService.post_anything(userName).then(function (data) {
                 if (!Array.isArray(data.places)) {
-                    
-                    $scope.error_message = data.places.Message;
+
+                    $rootScope.error_message = data.places.Message;
 
                     console.log($scope.error_message)
                     bsLoadingOverlayService.stop({
@@ -185,6 +295,7 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                         referenceId: 'first'
                     });
                     $scope.loading = true;
+                    $scope.addressDetails = false
                 }
                 return data.places;
             }, function (status) {
@@ -215,6 +326,7 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             })
 
         }
+
     }
 ]);
 
@@ -230,7 +342,7 @@ bkSearch.controller('ListBottomSheetCtrl', function ($scope, $mdBottomSheet) {
     }
 })
 
-bkSearch.controller( 'NoResultBottomSheet', function ( $scope, $mdBottomSheet ) {
+bkSearch.controller('NoResultBottomSheet', function ($scope, $mdBottomSheet) {
     $scope.NoResultBottomSheet = function () {
         console.log("show bottonsheet pls")
         $scope.alert = '';

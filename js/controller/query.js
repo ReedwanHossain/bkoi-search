@@ -1,6 +1,7 @@
 var bkSearch = angular.module("bksearch");
-bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'HttpService', 'bsLoadingOverlayService', '$mdBottomSheet',
-    function ($scope, $stateParams, $timeout, HttpService, bsLoadingOverlayService, $mdBottomSheet) {
+bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'HttpService', '$http', 'bsLoadingOverlayService', '$mdBottomSheet', '$rootScope', '$location',
+
+    function ($scope, $stateParams, $timeout, HttpService, $http, bsLoadingOverlayService, $mdBottomSheet, $rootScope, $location) {
         console.log('query');
         //sidebar hide for mobile and web
         if (screen.width < 768) {
@@ -23,7 +24,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             }
         }
 
-        
+
 
         var minLength = 0;
         $scope.no_result = true
@@ -44,7 +45,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             center: {
                 lat: 23.757087,
                 lng: 90.390370,
-                zoom: 16
+                zoom: 17
             },
             defaults: {
                 zoomAnimation: true,
@@ -58,9 +59,9 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
                     lng: 90.390370,
                     draggable: false,
                     icon: {
-                        iconUrl: 'assets/img/bmarker.png',
-                        iconSize: [70, 70],
-                        iconAnchor: [50, 50]
+                        // iconUrl: 'assets/img/bmarker.png',
+                        //     iconSize: [70, 70],
+                        //    iconAnchor: [22, 94]
                     },
                 },
             },
@@ -68,7 +69,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
 
             events: { // or just {} //all events
                 map: {
-                    enable: ['moveend', 'popupopen'],
+                    enable: ['moveend', 'popupopen', 'click'],
                     logic: 'emit'
                 },
                 markers: {
@@ -108,36 +109,149 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             }
         });
 
-        var init = function() {
+        var init = function () {
             HttpService.post_anything($stateParams.query).then(function (data) {
                 console.log($stateParams.query)
                 if (Array.isArray(data.places)) {
-                     $scope.selected = data.places[0];
-                      localStorage.setItem('selectedLocation', JSON.stringify(data.places[0]))
-                     if (screen.width < 768) {
-                    $scope.showListBottomSheet();
-                } else {
-                    $scope.addressDetails = true
+                    $scope.selected = data.places[0];
+                    localStorage.setItem('selectedLocation', JSON.stringify(data.places[0]))
+                    if (screen.width < 768) {
+                        $scope.showListBottomSheet();
+                    } else {
+                        $scope.addressDetails = true
+                    }
+
                 }
-                   
-                } 
-            
-            $scope.markers.m1.lat = parseFloat($scope.selected.latitude);
-            $scope.markers.m1.lng = parseFloat($scope.selected.longitude)
-            $scope.center.lat = parseFloat($scope.selected.latitude);
-            $scope.center.lng = parseFloat($scope.selected.longitude);
-            $scope.center.zoom = 17
-                
+
+                $scope.markers.m1.lat = parseFloat($scope.selected.latitude);
+                $scope.markers.m1.lng = parseFloat($scope.selected.longitude)
+                $scope.center.lat = parseFloat($scope.selected.latitude);
+                $scope.center.lng = parseFloat($scope.selected.longitude);
+                $scope.center.zoom = 17
+
+                localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
+
+                //get shareble link
+
+                let url = $location.absUrl().split('?')[0]
+
+                console.log(url)
+                $scope.shareUrl = url
+
+                $scope.copyShareLink = function () {
+
+                    console.log('in copylink')
+
+                    if (url.length = 34) {
+
+                        let newUrl = url.slice(7, 28)
+
+                        console.log(newUrl)
+
+                        $scope.shareUrl = newUrl + $scope.selected.uCode
+
+                        elementForShareUrl()
+                        $scope.linkCopyInfo = true
+                        showCopiedInfo()
+
+                    } else {
+                        console.log("in else url" + url)
+
+                        url = url + $scope.selected.uCode
+
+                        $scope.shareUrl = url
+
+                        elementForShareUrl()
+                        $scope.linkCopyInfo = true
+                        showCopiedInfo()
+
+                    }
+                }
+
+                let elementForShareUrl = function () {
+
+                    var dummy = document.createElement("input")
+
+                    document.body.appendChild(dummy)
+
+                    dummy.setAttribute("id", "dummy_id")
+
+                    document.getElementById("dummy_id").value = $scope.shareUrl
+
+                    dummy.select()
+
+                    document.execCommand("copy")
+
+                    document.body.removeChild(dummy)
+                }
+
+                const showCopiedInfo = function () {
+
+                    $timeout(function () {
+
+                        $scope.linkCopyInfo = false
+
+                    }, 1000)
+
+                }
+
+
             }, function (status) {
                 $scope.loading = true;
             });
         }
         init()
 
+        //reverse geocoding
+
+        $scope.$on("leafletDirectiveMap.click", function (event, args) {
+            console.log(args.leafletEvent.latlng)
+
+            $scope.markers.m1.lat = args.leafletEvent.latlng.lat
+            $scope.markers.m1.lng = args.leafletEvent.latlng.lng
+
+            const markerLatitude = $scope.markers.m1.lat
+            const markerLongitude = $scope.markers.m1.lng
+
+            let paramData = {
+                params: {
+                    latitude: markerLatitude,
+                    longitude: markerLongitude
+                }
+            }
+
+            //[""0""] latlng.lat
+
+            $http.get("https://barikoi.xyz/v1/reverse/without/auth", paramData)
+                .success(function (response) {
+                    $scope.selected = response[0]
+                    // $rootScope.error_message
+
+                    localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
+
+                    if ($scope.selected) {
+
+                        console.log("in selected & found")
+                        $rootScope.error_message = false
+
+                        if (screen.width < 768) {
+                            $scope.showListBottomSheet()
+                        } else {
+                            $scope.addressDetails = true
+                        }
+                    } else {
+
+                        console.log("in selected & notNound")
+
+                        $rootScope.error_message = true
+                        $scope.addressDetails = false
+                    }
+                })
+        })
+
         $scope.onSelect = function (user) {
             $scope.selected = user;
 
-            localStorage.setItem('selectedLocation', JSON.stringify($scope.selected))
 
             if ($scope.selected !== null) {
                 console.log("inselected")
@@ -170,7 +284,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             $scope.loading = false;
             return HttpService.post_anything(userName).then(function (data) {
                 if (!Array.isArray(data.places)) {
-                    
+
                     $scope.error_message = data.places.Message;
 
                     console.log($scope.error_message)
@@ -185,6 +299,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
                         referenceId: 'first'
                     });
                     $scope.loading = true;
+                    $scope.addressDetails = false
                 }
                 return data.places;
             }, function (status) {
@@ -193,6 +308,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
                 });
 
                 $scope.loading = true;
+                
             });
 
         };
@@ -215,6 +331,7 @@ bkSearch.controller("QueryController", ['$scope', '$stateParams', '$timeout', 'H
             })
 
         }
+
+
     }
 ]);
-
