@@ -40,12 +40,11 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             templateUrl: './templates/loader.html'
         })
 
-
         angular.extend($scope, {
             center: {
                 lat: 23.757087,
                 lng: 90.390370,
-                zoom: 18
+                zoom: 17
             },
             defaults: {
                 zoomAnimation: true,
@@ -60,8 +59,11 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                     draggable: false,
                     icon: {
                         iconUrl: 'assets/img/bmarker.png',
-                        iconSize: [70, 70],
-                        iconAnchor: [50, 50]
+                        iconSize: [40, 50],
+                        iconAnchor: [22, 47],
+                        popupAnchor: [6, -26],
+                        shadowAnchor: [15, 17],
+                        shadowSize: [41, 21],
                     },
                 },
             },
@@ -86,7 +88,8 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                         type: 'xyz',
                         layerOptions: {
                             attribution: 'Barikoi',
-                            maxZoom: 23
+                            maxZoom: 23,
+                            // minZoom: 18
                         },
                     },
 
@@ -99,7 +102,8 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                             apikey: 'pk.eyJ1Ijoicmhvc3NhaW4iLCJhIjoiY2o4Ymt0NndlMHVoMDMzcnd1ZGs4dnJjMSJ9.5Y-mrWQCMXqWTe__0J5w4w',
                             mapid: 'mapbox.streets',
                             attribution: 'barikoi',
-                            maxZoom: 23
+                            maxZoom: 23,
+                            // minZoom: 16
                         },
                         layerParams: {
                             showOnSelector: true
@@ -167,8 +171,8 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
             }
 
             const showCopiedInfo = function () {
-                
-                $timeout( function () {
+
+                $timeout(function () {
 
                     $scope.linkCopyInfo = false
 
@@ -291,6 +295,7 @@ bkSearch.controller("MainController", ['$scope', '$stateParams', '$timeout', 'Ht
                         referenceId: 'first'
                     });
                     $scope.loading = true;
+                    $scope.addressDetails = false
                 }
                 return data.places;
             }, function (status) {
